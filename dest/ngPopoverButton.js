@@ -12,7 +12,7 @@ angular.module("ngPopoverButton", [ "ui.bootstrap.position", "templates" ]).dire
             onClose: "&"
         },
         link: {
-            post: function($scope, elem, attrs) {
+            post: function($scope, elem) {
                 $scope.$watch("open", function() {
                     if ($scope.open) {
                         $scope.onOpen();
@@ -21,7 +21,7 @@ angular.module("ngPopoverButton", [ "ui.bootstrap.position", "templates" ]).dire
                     }
                     if ($scope.open) {
                         $timeout(function() {
-                            var pos = $position.positionElements(elem, elem.children(".popover"), $scope.placement, false);
+                            var pos = $position.positionElements(elem, elem.children().eq(1), $scope.placement, false);
                             $scope.popoverPosition = {
                                 top: pos.top + "px",
                                 left: pos.left + "px"

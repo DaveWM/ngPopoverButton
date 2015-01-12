@@ -33,7 +33,7 @@
                         // Need to do this in a timeout, because if popover is hidden when it is positioned, the "positionElements" method doesn't work correctly.
                         if ($scope.open) {
                             $timeout(function() {
-                                var pos = $position.positionElements(elem, elem.children('.popover'), $scope.placement, false);
+                                var pos = $position.positionElements(elem, elem.children().eq(1), $scope.placement, false);
                                 $scope.popoverPosition = { top: pos.top + "px", left: pos.left + "px" };
                             }, 0);
                         }
