@@ -1,0 +1,7 @@
+﻿<button class="btn btn-default" ng-model="open" btn-checkbox type="button"><i class="fa" ng-class="buttonIcon"></i> {{buttonText}}</button>
+<div class="popover animate animate-fade" ng-class="placement" ng-show="open" ng-style="popoverPosition">
+    <div class="arrow"></div>
+    <div class="popover-inner">
+        <ng-transclude></ng-transclude>
+    </div>
+</div>
