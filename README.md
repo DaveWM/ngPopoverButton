@@ -1,4 +1,4 @@
-# ngPopoverButton [![Build Status](https://travis-ci.org/DaveWM/ngPopoverButton.svg)](https://travis-ci.org/DaveWM/ngPopoverButton)
+# ngPopoverButton [![Build Status](https://travis-ci.org/DaveWM/ngPopoverButton.svg)](https://travis-ci.org/DaveWM/ngPopoverButton) [![bitHound Score](https://www.bithound.io/DaveWM/ngPopoverButton/badges/score.svg)](https://www.bithound.io/DaveWM/ngPopoverButton)
 ngPopoverButton is a directive for a button that shows a popover when clicked. 
 The main attaction of this directive is that the content is compiled in the scope of the parent controller,
 so it is completely dynamic, and you can have any bindings you want in it.
