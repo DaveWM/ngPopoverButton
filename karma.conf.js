@@ -18,7 +18,7 @@ module.exports = function(config) {
       'bower_components/angular/angular.js',
       'node_modules/angular-mocks/angular-mocks.js',
       'bower_components/angular-ui-bootstrap-bower/ui-bootstrap.js',
-      'src/**/*.js',
+      'dest/ngPopoverButton.js',
       'test/**/*.spec.js',
       'tmp/**/*.js'
     ],

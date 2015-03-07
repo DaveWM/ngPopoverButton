@@ -29,7 +29,6 @@ module.exports = function (grunt){
                 dest: 'dest/ngPopoverButton.js',
                 options:{
                     mangle: false,
-                    compress: false,
                     beautify: true
                 }
             },
@@ -38,7 +37,7 @@ module.exports = function (grunt){
                 dest: 'dest/ngPopoverButton.min.js',
                 options:{
                     mangle: true,
-                    compress: true,
+                    compress: {},
                     beautify: false
                 }
             }
@@ -57,9 +56,21 @@ module.exports = function (grunt){
             all:{
                 src: ['src/**/*.js']
             }
+        },
+        connect:{
+            server:{
+                options:{
+                    open: {
+                        target: 'http://localhost:8000/demo/index.html'
+                    },
+                    keepalive: true
+                }
+            }
         }
     });
 
-    grunt.registerTask('default', ['html2js', 'jshint', 'karma', 'less:normal','less:min', 'uglify:normal', 'uglify:min']);
-    grunt.registerTask('test', ['html2js','karma']);
+    grunt.registerTask('build', ['html2js', 'jshint', 'less:normal','less:min', 'uglify:normal', 'uglify:min']);
+    grunt.registerTask('default', ['build','karma']);
+    grunt.registerTask('test', ['default']);
+    grunt.registerTask('serve', ['build', 'connect:server']);
 }

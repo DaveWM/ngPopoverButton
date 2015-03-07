@@ -1,27 +1,51 @@
 ﻿angular.module("ngPopoverButton", ["ui.bootstrap.position", "templates"])
-    /**
-    * @constructor popoverButton
-    * @desc Directive that creates a button which opens a popover when clicked. The popover-button element should always contain a content element (and optionally a title element).
-    * Implement using the tag <popover-button></popover-button>. Restricted for element use only.
-    */
-    .directive("popoverButton", ['$position', '$timeout', function ($position, $timeout) {
+    .directive('popoverControl', function (){
+        return {
+            restrict: 'A',
+            controller: function ($scope, $element){
+                this.popover = null;
+                this.element = $element;
+                var self = this;
+                $element.bind("click", function (){
+                    $scope.$apply(function (){
+                        if(self.popover){
+                            self.popover.open = !self.popover.open;
+                        }
+                    });
+                });
+            }
+        };
+    })
+    .directive("popover", ['$position', '$timeout', '$document', function ($position, $timeout, $document) {
         "use strict";
 
         return {
             restrict: 'E',
-            transclude: true,
+            require: '^popoverControl',
             templateUrl: 'src/template.html',
+            transclude: true,
+            replace: true,
             scope: {
-                buttonText: '@',
-                buttonIcon: '@',
                 placement: '@',
                 onOpen: '&',
-                onClose: '&'
+                onClose: '&',
+                open: '='
             },
             link: {
-                post: function($scope, elem) {
+                post: function($scope, elem, attrs, popoverControl) {
+                    $document.find('body').eq(0).append(elem);
+
+                    popoverControl.popover = $scope;
+
+                    $scope.placement = $scope.placement || 'left';
+
                     // watch for changes to popover state
-                    $scope.$watch('open', function() {
+                    $scope.$watch(function (){
+                        return {
+                            open: $scope.open,
+                            placement: $scope.placement
+                        };
+                    }, function() {
                         if ($scope.open) {
                             $scope.onOpen();
                         }
@@ -32,38 +56,28 @@
                         // if popover has been opened, position it correctly. 
                         // Need to do this in a timeout, because if popover is hidden when it is positioned, the "positionElements" method doesn't work correctly.
                         if ($scope.open) {
-                            $timeout(function() {
-                                var pos = $position.positionElements(elem, elem.children().eq(1), $scope.placement, false);
-                                $scope.popoverPosition = { top: pos.top + "px", left: pos.left + "px" };
+                            $timeout(function () {
+                                var pos = $position.positionElements(popoverControl.element, elem, $scope.placement, false);
+                                $scope.popoverPosition = {top: pos.top + "px", left: pos.left + "px"};
                             }, 0);
                         }
-                    });
+                    }, true);
                 }
             }
         };
     }])
-    /**
-    * @constructor title
-    * @desc The title for the popover.
-    * Implement using the tag <title></title>. Restricted for element use only.
-    */
     .directive('title', function() {
         return {
-            require: '^popoverButton',
+            require: '^popover',
             restrict: 'E',
             transclude: true,
             replace: true,
             template: '<div class="popover-title"><ng-transclude></ng-transclude></div>'
         };
     })
-    /**
-    * @constructor content
-    * @desc The content of the popover.
-    * Implement using the tag <content></content>. Restricted for element use only.
-    */
     .directive('content', function() {
         return {
-            require: '^popoverButton',
+            require: '^popover',
             restrict: 'E',
             transclude: true,
             replace: true,

@@ -1,0 +1,26 @@
+<html ng-app="demo">
+    <head>
+        <script src="/bower_components/angular/angular.js"></script>
+        <script src="/bower_components/angular-ui-bootstrap-bower/ui-bootstrap.js"></script>
+        <link rel="stylesheet" href="/bower_components/bootstrap-css/css/bootstrap.css"/>
+
+        <script src="demo.js"></script>
+        <script src="/dest/ngPopoverButton.js"></script>
+        <link rel="stylesheet" href="/dest/ngPopoverButton.css"/>
+    </head>
+    <body ng-controller="demoController">
+        <select ng-model="placement">
+            <option selected="true" value="left">left</option>
+            <option value="right">right</option>
+            <option value="top">top</option>
+            <option value="bottom">bottom</option>
+        </select>
+        <button class="btn btn-lg btn-primary" popover-control style="position: absolute;top:50%;left:50%;">
+            Click Me
+            <popover open="popoverOpen" placement="{{placement}}">
+                <title>Test</title>
+                <content>This is so much better than the ui bootstrap popover...</content>
+            </popover>
+        </button>
+    </body>
+</html>
